@@ -1,6 +1,11 @@
 package net.liexiang.loveyou.network;
 
+import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
+
+import net.liexiang.loveyou.base.LYApplication;
+import net.liexiang.loveyou.utils.StringUtil;
 
 import java.io.IOException;
 
@@ -15,10 +20,12 @@ import okhttp3.Response;
  */
 public class InterceptorHeader implements Interceptor {
 
+    public static Context mContext;
 
     private static InterceptorHeader instance;
 
-    public static InterceptorHeader get() {
+    public static InterceptorHeader get(Context context) {
+        mContext = context;
         if (instance == null) {
             instance = new InterceptorHeader();
         }
@@ -36,11 +43,13 @@ public class InterceptorHeader implements Interceptor {
         Request         request = chain.request();
         Request.Builder builder = request.newBuilder();
 
+
         //添加请求token
-        if (TextUtils.isEmpty(newToken)) {
-            newToken = "Bearer " + "token";
-        }
-        builder.addHeader("Authorization", newToken);
+//        if (TextUtils.isEmpty(newToken)) {
+//            newToken = "Bearer " + "token";
+//        }
+//        builder.addHeader("Authorization", "Bearer " + LYApplication.token);
+//        builder.addHeader("X-APP-VERSION", StringUtil.test(mContext));
 
         Response proceed = chain.proceed(builder.build());
         if (proceed.code() == 403) {

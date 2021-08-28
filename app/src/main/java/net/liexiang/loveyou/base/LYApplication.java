@@ -5,10 +5,10 @@ import net.liexiang.loveyou.network.InterceptorHeader;
 import net.liexiang.loveyou.network.WebUrl;
 
 /**
- * @Author sbqfile
- * @Date 2020-01-29 12:25
- * @Description
- **/
+ * Describe:
+ * Created by Gao Chunfa on 4/16/21.
+ * Company: Hainan DaDi(Jinan) Network Technology Co. Ltd
+ */
 public class LYApplication extends BaseApplication {
 
     private static LYApplication instance;
@@ -17,6 +17,7 @@ public class LYApplication extends BaseApplication {
         return instance;
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -24,9 +25,19 @@ public class LYApplication extends BaseApplication {
         instance = this;
 
         //初始化网络模块
+        initRetrofit();
+
+
+    }
+
+    /**
+     * 初始化网络模块
+     */
+    private void initRetrofit() {
+//           String url = "http://t.dailian.iliexiang.com/";
         HttpConfig httpConfig = new HttpConfig();
-        httpConfig.addInterceptor(InterceptorHeader.get());
-        httpConfig.setBaseUrl(WebUrl.HTTP_DEV);
+        httpConfig.addInterceptor(InterceptorHeader.get(getApplicationContext()));
+        httpConfig.setBaseUrl(WebUrl.HTTP_T);
         httpConfig.setConnectTimeOut(120);
 //        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
 //        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -34,8 +45,5 @@ public class LYApplication extends BaseApplication {
 //        httpConfig.addInterceptor(HeaderAgentInterceptor.get(AppConfig.CLIENT_NAME));
 //        httpConfig.addInterceptor(new DynamicTimeoutInterceptor());
         httpConfig.init();
-
-
-
     }
 }

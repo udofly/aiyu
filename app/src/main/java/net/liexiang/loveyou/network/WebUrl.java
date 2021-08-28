@@ -35,7 +35,8 @@ package net.liexiang.loveyou.network;
 public class WebUrl {
 
 
-    public static String HTTP_T   = "https://t.play.iliexiang.com/";
+    public static String HTTP_T   = "http://t.dailian.iliexiang.com/";
+//    public static String HTTP_T   = "https://dev.play.iliexiang.com/";
     public static String HTTP_DEV = "https://dev.play.iliexiang.com/";
     public static String HTTP_PRE = "https://pre.play.iliexiang.com/";
     public static String HTTP_WWW = "https://www.huowanes.com/";
@@ -68,6 +69,7 @@ public class WebUrl {
 
 
     //chat 聊天室
+    public static String HALL                 = "api/dailian/home/hall";//hall
     public static String CHAT_ROOM_LIST                 = HTTP + "api_v2/chat/room/list";//房间列表
     public static String CHAT_RANK_LIST                 = HTTP + "api_v2/chat/rank/list";//榜单列表
     public static String CHAT_ROOM_JOIN                 = HTTP + "api_v2/chat/room/join";//加入房间

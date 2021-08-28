@@ -1,5 +1,7 @@
 package net.liexiang.loveyou.network;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -15,6 +17,24 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * @Description 网络请求的配置
  **/
 public class HttpConfig {
+
+
+//    private HttpConfig() {
+//    }
+//
+//    private static HttpConfig instance;
+//
+//    public static HttpConfig get() {
+//        if (instance == null) {
+//            synchronized (HttpConfig.class) {
+//                if (instance == null) {
+//                    instance = new HttpConfig();
+//                }
+//            }
+//        }
+//        return instance;
+//    }
+
 
     private int               connectTimeOut = 60;
     private String            baseUrl        = "";
@@ -33,9 +53,10 @@ public class HttpConfig {
     }
 
     public void init() {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .connectTimeout(connectTimeOut, TimeUnit.SECONDS);
-
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(connectTimeOut, TimeUnit.SECONDS);
+        builder.readTimeout(connectTimeOut, TimeUnit.SECONDS);
+        builder.writeTimeout(connectTimeOut, TimeUnit.SECONDS);
         for (Interceptor interceptor : interceptors) {
             builder.addInterceptor(interceptor);
         }
@@ -44,6 +65,7 @@ public class HttpConfig {
                 .baseUrl(baseUrl)
                 .client(builder.build())
                 .addConverterFactory(ScalarsConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // 支持RxJava
                 .build();
     }
 
@@ -52,5 +74,6 @@ public class HttpConfig {
     public static Retrofit getRetrofit() {
         return singleInstance;
     }
+
 
 }
